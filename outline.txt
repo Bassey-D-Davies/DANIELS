@@ -1,0 +1,64 @@
+outline
+terminal
+
+CLI COMMAND LINE INTERFACE
+
+GUI
+
+IS an interface which is used to interact with your comprter
+
+HTML
+Hyper Text Markup Language
+
+mark up language
+helps with structure of the website
+the skeleton
+
+CSS cascaden style sheet the flesh and clothes
+inline
+internal
+external
+
+JAVA Script  interaction 
+ inline block line elements
+display
+
+GIT&GIT HUB
+GIT HUB IS FOR HOSTINGOF CODES
+GIT version control
+it is used as a save point
+
+
+
+
+GIT BASH
+PWD
+The Linux pwd command stands for Print Working Directory. It prints the absolute path of your current directory. It tells you exactly where you are in the filesystem.
+
+cd change directorate
+
+DIR most commonly stands for a command-line utility used to display a list of files and subdirectories in a computer's director
+Togo to documents  cd documents
+
+THEN TO RETURN cd..
+
+View Current Folder 	cd	Displays the exact folder path you are currently in.
+
+Move Inside a Folder	cd Documents	Moves deeper into a sub-folder located in your current folder
+
+Move Up One Level	cd ..	Moves backward to the parent folder.
+
+Go to the Drive Root	cd \	Jumps straight to the root of the current drive (e.g., C:\).
+
+Switch Drive and Folder	cd /d D:\Projects	Switches to a completely different drive and folder simultaneously.
+
+
+
+mkdir
+
+mv
+
+touch
+.rm
+
+! emmet

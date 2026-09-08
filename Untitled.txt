@@ -1,0 +1,819 @@
+
+CSS
+Complete Styling Guide
+From Basics to Flexbox, Grid & Real Layouts
+
+
+1. What is CSS?
+CSS stands for Cascading Style Sheets. It is the language that controls how HTML elements look — colours, fonts, spacing, layout, animation, and more.
+If HTML is the skeleton of a webpage, CSS is the skin and clothes. You write CSS rules that tell the browser: 'make this heading blue, make that button rounded, put these items side by side.'
+
+CSS is called 'Cascading' because when multiple rules target the same element, they cascade (fall) into each other following a specific priority order. We will cover this shortly.
+
+
+3 Ways to Add CSS
+1. Inline CSS — directly on an element (least preferred)
+<h1 style="color: blue; font-size: 32px;">Hello</h1>
+
+
+2. Internal CSS — inside a <style> tag in the <head>
+<head>
+  <style>
+    h1 { color: blue; }
+    p  { font-size: 16px; }
+  </style>
+</head>
+
+
+
+
+
+
+3. External CSS — a separate .css file (best practice)
+<!-- In your HTML <head> -->
+<link rel="stylesheet" href="style.css">
+
+/* In your style.css file */
+h1 { color: blue; }
+p  { font-size: 16px; }
+
+
+Always use external CSS. It keeps your HTML clean, lets you reuse styles across multiple pages, and makes your code much easier to manage.
+
+
+TASK
+Create a style.css file. Link it to your HTML page. Change the colour of your h1 and the font size of your paragraphs.
+
+2. CSS Syntax & Selectors
+CSS Rule Syntax
+selector {
+  property: value;
+  property: value;
+}
+
+/* Example: */
+h1 {
+  color: navy;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+
+selector — which element(s) to target
+property — what to change (color, font-size, margin, etc.)
+value — what to set it to
+Each declaration ends with a semicolon ;
+
+Selectors
+/* Element selector — targets all <p> tags */
+p { color: gray; }
+
+/* Class selector — targets anything with class='card' */
+.card { background: white; border-radius: 8px; }
+
+/* ID selector — targets the element with id='hero' */
+#hero { background: navy; color: white; }
+
+/* Group selector — targets multiple elements at once */
+h1, h2, h3 { font-family: Arial, sans-serif; }
+
+/* Descendant selector — targets <a> inside <nav> only */
+nav a { text-decoration: none; color: white; }
+
+/* Child selector — direct children only */
+ul > li { list-style: square; }
+
+/* Pseudo-class — when user hovers over a button */
+button:hover { background: darkblue; }
+
+/* Pseudo-class — first child */
+li:first-child { font-weight: bold; }
+li:last-child  { border-bottom: none; }
+li:nth-child(2) { color: red; }
+
+/* Pseudo-element — styles part of an element */
+p::first-line  { font-weight: bold; }
+p::before { content: '>> '; color: blue; }
+
+
+Specificity — Which Rule Wins?
+When two rules target the same element, the more specific one wins. The order from weakest to strongest:
+Element selector  (p, h1)  — lowest specificity
+Class selector  (.card)  — medium
+ID selector  (#hero)  — high
+Inline style  (style='...')  — highest
+!important  — overrides everything (use sparingly)
+
+p { color: gray; }          /* loses */
+.intro { color: blue; }     /* wins over element */
+#main-text { color: red; }  /* wins over class */
+
+/* Force a style to win — use sparingly */
+p { color: green !important; }
+
+
+When styles are not applying as expected, specificity is usually the reason. Check if a more specific rule is overriding yours.
+
+
+TASK
+Style your HTML page: give every section a different background colour using class selectors. Change the link colour using a descendant selector (nav a). Add a hover effect on the nav links.
+
+
+
+3. Colours & Backgrounds
+Colour Values
+/* Named colours */
+color: red;
+color: navy;
+color: tomato;
+
+/* Hexadecimal — most common */
+color: #1A56DB;   /* full hex */
+color: #333;      /* shorthand (same as #333333) */
+
+/* RGB */
+color: rgb(26, 86, 219);
+
+/* RGBA — with opacity (0 = invisible, 1 = solid) */
+color: rgba(26, 86, 219, 0.5);
+
+/* HSL — hue, saturation, lightness */
+color: hsl(220, 80%, 48%);
+
+
+Backgrounds
+/* Solid background colour */
+background-color: #f8fafc;
+
+/* Background image */
+background-image: url('hero.jpg');
+background-size: cover;       /* fills the element */
+background-position: center;  /* centres the image */
+background-repeat: no-repeat; /* prevents tiling */
+
+/* Gradient */
+background: linear-gradient(135deg, #1A56DB, #0ea5e9);
+background: linear-gradient(to right, #1e293b, #334155);
+
+/* Shorthand — image + colour fallback */
+background: url('hero.jpg') center/cover no-repeat #1e293b;
+
+
+TASK
+Add a gradient background to your page's hero section. Use rgba() to add a semi-transparent dark overlay effect on a section that has a background image.
+
+
+
+4. Typography
+p {
+  font-family: 'Arial', sans-serif;  /* primary, fallback */
+  font-size: 16px;
+  font-weight: bold;     /* bold | normal | 100-900 */
+  font-style: italic;    /* italic | normal */
+  line-height: 1.6;      /* space between lines */
+  letter-spacing: 0.5px; /* space between letters */
+  text-align: center;    /* left | right | center | justify */
+  text-transform: uppercase; /* uppercase | lowercase | capitalize */
+  text-decoration: none; /* underline | none | line-through */
+  color: #1e293b;
+}
+
+
+Google Fonts
+Google Fonts gives you hundreds of free professional fonts. Add one to your HTML head, then use it in CSS:
+
+<!-- In <head> -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+/* In style.css */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+
+A good font pairing is to use one font for headings and a different, simpler font for body text. Keep it to 2 fonts maximum.
+
+
+TASK
+Add a Google Font to your page. Use it for your headings. Set a comfortable line-height of 1.6 on all paragraphs. Make all nav links uppercase.
+
+
+
+5. The Box Model
+Every element in HTML is a rectangular box. The CSS Box Model describes how that box is sized and spaced.
+
+/* From inside out: */
+/* 1. Content — the actual text or image */
+/* 2. Padding — space between content and border */
+/* 3. Border — the visible edge */
+/* 4. Margin — space between this element and others */
+
+div {
+  width: 300px;
+  height: 200px;
+  padding: 20px;         /* all sides */
+  border: 2px solid #ccc;
+  margin: 16px;
+}
+
+/* Shorthand: top | right | bottom | left */
+padding: 10px 20px 10px 20px;
+
+/* Shorthand: vertical | horizontal */
+padding: 10px 20px;
+
+/* Shorthand: all sides equal */
+padding: 16px;
+
+/* Individual sides */
+margin-top: 40px;
+margin-bottom: 40px;
+padding-left: 24px;
+
+
+box-sizing: border-box
+By default, padding and border ADD to the element width. This is confusing. Fix it with:
+
+/* Add this to the top of every CSS file you write */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Now: if width is 300px, it stays 300px even after adding padding/border */
+
+
+Always add box-sizing: border-box as the very first rule in your CSS. Without it, layouts will break in unexpected ways.
+
+
+TASK
+Add box-sizing: border-box to your CSS. Create a .card class with padding, a border, a border-radius, and a box-shadow. Apply it to 3 div elements on your page.
+
+
+
+6. Display Property
+The display property controls how an element appears in the flow of the page.
+
+/* Block — takes full width, starts on a new line */
+/* Default for: div, p, h1-h6, section, article */
+div { display: block; }
+
+/* Inline — sits in a line of text, width = content only */
+/* Default for: span, a, strong, em */
+span { display: inline; }
+
+/* Inline-block — inline but accepts width/height/padding */
+/* Great for buttons and nav items */
+button { display: inline-block; padding: 10px 24px; }
+
+/* None — completely hides the element (removes from layout) */
+.hidden { display: none; }
+
+
+Inline elements ignore width, height, and vertical margin. If you need to set those, switch to inline-block or block.
+
+
+
+7. Positioning
+The position property controls how an element is placed on the page. This is one of the most important concepts in CSS.
+
+/* STATIC — default, element follows normal flow */
+div { position: static; }
+
+/* RELATIVE — offset FROM its normal position */
+/* Still takes up space in the flow */
+.badge {
+  position: relative;
+  top: -10px;    /* moves 10px up from where it would normally be */
+  left: 5px;
+}
+
+/* ABSOLUTE — removed from flow, positioned relative to nearest */
+/* positioned ancestor (anything not static) */
+.tooltip {
+  position: absolute;
+  top: 0;
+  right: 0;   /* top-right corner of parent */
+}
+
+/* Parent must be position: relative for absolute child to work */
+.card {
+  position: relative;  /* anchor for absolute children */
+}
+
+/* FIXED — stays fixed to the viewport, even on scroll */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;  /* sits on top of other elements */
+}
+
+/* STICKY — acts like relative until it reaches a scroll point */
+.header {
+  position: sticky;
+  top: 0;   /* sticks to top when scrolled to it */
+}
+
+
+z-index
+z-index controls stacking order. Higher values appear in front. Only works on positioned elements (not static).
+
+.modal-overlay { position: fixed; z-index: 200; }
+.modal         { position: fixed; z-index: 300; }  /* in front of overlay */
+nav            { position: fixed; z-index: 100; }  /* behind modal */
+
+
+TASK
+Make your navbar sticky so it stays at the top when the user scrolls. Add a notification badge on one of your nav items using position: absolute on the badge and position: relative on its parent.
+
+
+
+8. CSS Units
+/* ABSOLUTE */
+width: 300px;   /* pixels — fixed size */
+
+/* RELATIVE TO PARENT */
+width: 50%;     /* 50% of the parent's width */
+
+/* RELATIVE TO ROOT FONT SIZE (usually 16px) */
+font-size: 1rem;    /* 16px */
+font-size: 1.5rem;  /* 24px */
+font-size: 0.875rem;/* 14px */
+
+/* RELATIVE TO ELEMENT'S OWN FONT SIZE */
+padding: 1em;   /* 1x current font-size */
+
+/* VIEWPORT UNITS */
+width: 100vw;   /* 100% of viewport width */
+height: 100vh;  /* 100% of viewport height */
+font-size: 5vw; /* 5% of viewport width */
+
+/* MIN/MAX — responsive size clamping */
+width: min(600px, 100%);  /* smaller of the two */
+font-size: clamp(14px, 2vw, 20px); /* min, ideal, max */
+
+
+Use rem for font sizes, px for borders and shadows, % or rem for spacing, and vh/vw for full-screen sections.
+
+
+
+9. Flexbox
+Flexbox is a one-dimensional layout system. It arranges items in a row or column and gives you powerful control over alignment, spacing, and order.
+
+/* Step 1: Make the parent a flex container */
+.container {
+  display: flex;
+}
+/* All direct children are now flex items */
+
+
+Direction & Wrapping
+.container {
+  display: flex;
+  flex-direction: row;          /* default: left to right */
+  flex-direction: row-reverse;  /* right to left */
+  flex-direction: column;       /* top to bottom */
+  flex-direction: column-reverse;
+
+  flex-wrap: nowrap;   /* default: all in one line */
+  flex-wrap: wrap;     /* items wrap to next line when needed */
+
+  /* Shorthand: direction + wrap */
+  flex-flow: row wrap;
+}
+
+
+Alignment — The Key to Flexbox
+.container {
+  display: flex;
+
+  /* justify-content — aligns items along the MAIN axis */
+  justify-content: flex-start;    /* default */
+  justify-content: flex-end;
+  justify-content: center;        /* most used */
+  justify-content: space-between; /* gaps between items */
+  justify-content: space-around;  /* equal space around items */
+  justify-content: space-evenly;  /* perfectly equal space */
+
+  /* align-items — aligns items along the CROSS axis */
+  align-items: stretch;     /* default — fills height */
+  align-items: flex-start;  /* align to top */
+  align-items: flex-end;    /* align to bottom */
+  align-items: center;      /* vertically centre */
+
+  /* gap — space between flex items */
+  gap: 24px;
+  gap: 16px 32px; /* row-gap column-gap */
+}
+
+
+Flex Item Properties
+.item {
+  /* flex-grow — how much the item expands to fill space */
+  flex-grow: 1;   /* all items grow equally */
+  flex-grow: 2;   /* this item takes twice as much space */
+
+  /* flex-shrink — how much the item shrinks when space is tight */
+  flex-shrink: 1; /* default — allowed to shrink */
+  flex-shrink: 0; /* do NOT shrink this item */
+
+  /* flex-basis — ideal starting size before grow/shrink */
+  flex-basis: 200px;
+  flex-basis: auto;  /* size based on content */
+
+  /* Shorthand: grow | shrink | basis */
+  flex: 1;           /* flex: 1 1 0 */
+  flex: 0 0 200px;   /* fixed width, no grow/shrink */
+
+  /* align-self — override parent align-items for this item */
+  align-self: flex-end;
+
+  /* order — change visual order without changing HTML */
+  order: -1;  /* move to the front */
+  order: 2;   /* move after order:1 items */
+}
+
+
+Common Flexbox Patterns
+/* Perfect centre — horizontally and vertically */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Navigation bar */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+/* Card row that wraps */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.card {
+  flex: 1 1 280px;  /* grow, shrink, min-width */
+}
+
+
+TASK
+Build a navigation bar using Flexbox: logo on the left, nav links on the right. Then create a row of 3 cards that wrap on smaller screens using flex-wrap: wrap and flex: 1 1 280px.
+
+
+
+10. CSS Grid
+CSS Grid is a two-dimensional layout system. It works with both rows and columns at the same time, making it perfect for full page layouts.
+
+/* Step 1: Make the parent a grid container */
+.container {
+  display: grid;
+
+  /* Define columns */
+  grid-template-columns: 200px 1fr 1fr;  /* fixed | flexible | flexible */
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* responsive */
+
+  /* Define rows */
+  grid-template-rows: auto 1fr auto; /* header | content | footer */
+
+  /* Space between cells */
+  gap: 24px;
+  column-gap: 32px;
+  row-gap: 16px;
+}
+
+
+Placing Items on the Grid
+/* Using line numbers (counted from 1) */
+.header {
+  grid-column: 1 / 4;  /* from line 1 to line 4 (spans all 3 cols) */
+  grid-row: 1 / 2;
+}
+.sidebar {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+.main {
+  grid-column: 2 / 4;  /* takes 2 columns */
+}
+
+/* Span shorthand */
+.wide-card { grid-column: span 2; } /* spans 2 columns */
+
+
+Grid Template Areas — Most Readable Approach
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    'header  header'
+    'sidebar main'
+    'footer  footer';
+  min-height: 100vh;
+  gap: 0;
+}
+.site-header  { grid-area: header; }
+.sidebar      { grid-area: sidebar; }
+.main-content { grid-area: main; }
+.site-footer  { grid-area: footer; }
+
+
+Grid Alignment
+.container {
+  /* align all cells horizontally */
+  justify-items: start | end | center | stretch;
+
+  /* align all cells vertically */
+  align-items: start | end | center | stretch;
+
+  /* align the whole grid inside its container */
+  justify-content: start | center | end | space-between;
+  align-content: start | center | end | space-between;
+}
+
+/* Override on individual items */
+.item { justify-self: center; align-self: end; }
+
+
+TASK
+Build a full-page layout using grid-template-areas with: header (full width), sidebar (left), main content (right), footer (full width). Then separately create a photo gallery grid with auto-fit and minmax(200px, 1fr).
+
+
+
+11. Responsive Design & Media Queries
+Responsive design means your website looks good on all screen sizes — phones, tablets, and desktops.
+
+The Viewport Meta Tag
+This must be in every HTML file you create. Without it, mobile browsers will zoom out and your page will look tiny:
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+Media Queries
+/* Mobile-first approach — start with mobile styles, then expand */
+
+/* Base styles — mobile */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .cards { gap: 32px; }
+  nav { padding: 0 80px; }
+}
+
+/* Common breakpoints */
+/* Mobile:  < 768px  */
+/* Tablet:  768px    */
+/* Desktop: 1024px   */
+/* Large:   1280px+  */
+
+
+Always design mobile-first. Start with small screen styles, then use min-width media queries to enhance for larger screens. This approach is easier and results in faster-loading pages.
+
+
+TASK
+Make your page responsive: on mobile, your cards should stack vertically. On tablet and up, show them in a 2-column layout. On desktop, show 3 columns. Hide the nav links on mobile and show a 'Menu' text instead.
+
+
+
+12. Transitions & Animations
+Transitions — Smooth State Changes
+button {
+  background: #1A56DB;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  /* transition: property | duration | easing */
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+button:hover {
+  background: #1e40af;
+  transform: translateY(-2px); /* lifts up 2px */
+}
+
+/* Transition all changeable properties */
+.card { transition: all 0.3s ease; }
+.card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+
+
+Transform
+.element {
+  transform: translateX(20px);   /* move right */
+  transform: translateY(-10px);  /* move up */
+  transform: scale(1.1);         /* 10% bigger */
+  transform: rotate(45deg);      /* rotate */
+  transform: skewX(10deg);       /* skew */
+
+  /* Combine multiple transforms */
+  transform: translateY(-4px) scale(1.05);
+}
+
+
+CSS Animations
+/* Step 1: Define the animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Step 2: Apply the animation */
+.hero-title {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.badge {
+  animation: pulse 2s ease infinite; /* loops forever */
+}
+
+/* animation: name | duration | easing | delay | iteration */
+.card { animation: fadeIn 0.5s ease 0.2s both; }
+
+
+TASK
+Add a hover transition to all your cards (transform + box-shadow). Create a fadeIn animation and apply it to your hero section heading and paragraph.
+
+
+
+13. CSS Custom Properties (Variables)
+CSS Variables let you define values once and reuse them everywhere. When you change the variable, every place using it updates automatically.
+
+/* Define variables in :root so they are available everywhere */
+:root {
+  /* Colours */
+  --color-primary: #1A56DB;
+  --color-dark:    #1e293b;
+  --color-gray:    #64748b;
+  --color-light:   #f8fafc;
+
+  /* Typography */
+  --font-body:     'Inter', sans-serif;
+  --font-size-base: 16px;
+
+  /* Spacing */
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  32px;
+  --spacing-xl:  64px;
+
+  /* Border radius */
+  --radius:   8px;
+  --radius-lg: 16px;
+
+  /* Shadows */
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Use them with var() */
+body { font-family: var(--font-body); color: var(--color-dark); }
+.btn { background: var(--color-primary); padding: var(--spacing-sm) var(--spacing-md); }
+.card { border-radius: var(--radius); box-shadow: var(--shadow); }
+
+
+Define all your colours, fonts, and spacing as variables at the top of your CSS file. This makes restyling your whole website as easy as changing a few lines.
+
+
+TASK
+Refactor your CSS to use custom properties. Define at least 4 colour variables, 3 spacing variables, and a shadow variable. Replace all hardcoded values with var().
+
+
+
+14. Overflow, Scroll & Visibility
+/* overflow controls what happens when content is bigger than its box */
+.box {
+  width: 300px;
+  height: 200px;
+  overflow: visible;  /* default — content spills out */
+  overflow: hidden;   /* clips content — also hides scrollbar */
+  overflow: scroll;   /* always shows scrollbar */
+  overflow: auto;     /* scrollbar only when needed (best choice) */
+}
+
+/* Different for each axis */
+.code-block { overflow-x: auto; overflow-y: hidden; }
+
+/* Hiding elements */
+.hidden  { display: none; }      /* removes from layout */
+.invisible { visibility: hidden; } /* hides but keeps space */
+.see-through { opacity: 0; }     /* invisible but interactive */
+
+
+
+15. Useful Pseudo-classes & Pseudo-elements
+/* State pseudo-classes */
+a:hover   { color: blue; }
+a:visited { color: purple; }
+input:focus { outline: 2px solid blue; }
+button:active { transform: scale(0.97); }
+
+/* Structural pseudo-classes */
+li:first-child  { border-top: none; }
+li:last-child   { border-bottom: none; }
+li:nth-child(2) { background: #f0f0f0; }
+li:nth-child(odd)  { background: #fafafa; }
+li:nth-child(even) { background: white; }
+p:not(.intro) { color: gray; } /* all p except .intro */
+
+/* Pseudo-elements */
+p::first-line { font-weight: bold; }
+p::first-letter { font-size: 3em; float: left; }
+
+/* ::before and ::after — insert content without HTML */
+.required::after {
+  content: ' *';
+  color: red;
+}
+.quote::before { content: open-quote; }
+.quote::after  { content: close-quote; }
+
+
+
+16. CSS Best Practices
+Always start with box-sizing: border-box on *
+Define your colours and spacing as CSS variables in :root
+Use external stylesheets — never inline styles in production
+Write mobile-first — base styles for small screens, expand with min-width queries
+Use class selectors for styling, not ID selectors
+Keep specificity low — avoid !important unless absolutely necessary
+Group related styles together and leave comments for sections
+Use meaningful class names: .hero-title not .h1-big-text
+Limit yourself to 2 font families per project
+Test in multiple browsers and on a real phone
+
+CSS Reset / Base Styles
+Put this at the top of every project's CSS file:
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1e293b;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+ul  { list-style: none; margin: 0; padding: 0; }
+button { cursor: pointer; border: none; background: none; }
+h1, h2, h3, h4, h5, h6 { margin-top: 0; line-height: 1.2; }
+
+
+Copy this reset into every project. It removes browser inconsistencies and sets up sensible defaults so you start from a clean slate.
+
+
+
+CSS FINAL EXERCISE
+Style Your Portfolio Website
+
+
+Go back to the 3-page HTML portfolio website you built in the HTML guide and apply everything you have learned:
+
+Core Styles
+Add a CSS reset and custom properties for all your colours and spacing
+Pick and apply a Google Font for headings and a clean sans-serif for body
+Style all typography: font sizes, line-heights, colours
+
+Layout
+Build the navbar with Flexbox: logo left, links right
+Build the hero section with Flexbox: centred text and image
+Create a skills section using CSS Grid (auto-fit columns)
+Build a project cards row with Flexbox + wrap
+
+Polish
+Add hover transitions on all buttons and cards
+Add a fadeIn animation on the hero content
+Make all sections fully responsive with media queries
+Add a sticky navbar that changes background on scroll (use a CSS class toggle)
+
+Share your finished portfolio — you have learned everything needed to build a real, professional-looking website from scratch.
+
+
